@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Happy Birthday 🎉</title>
+
+<style>
+/* =======================
+   GLOBAL STYLES
+======================= */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Arial", sans-serif;
+}
+
+body {
+  background: linear-gradient(135deg, #ff6ec4, #7873f5);
+  color: #fff;
+  overflow-x: hidden;
+}
+
+/* =======================
+   HERO SECTION
+======================= */
+.hero {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 20px;
+  position: relative;
+}
+
+.hero h1 {
+  font-size: 3.2rem;
+  animation: fadeUp 1.5s ease-in-out;
+}
+
+.hero p {
+  margin-top: 15px;
+  font-size: 1.2rem;
+  max-width: 600px;
+  animation: fadeUp 2s ease-in-out;
+}
+
+.btn {
+  margin-top: 25px;
+  padding: 12px 25px;
+  border: none;
+  border-radius: 25px;
+  background: #fff;
+  color: #ff4d6d;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.btn:hover {
+  transform: scale(1.1);
+}
+
+/* =======================
+   SECTIONS
+======================= */
+section {
+  padding: 60px 20px;
+  text-align: center;
+}
+
+h2 {
+  margin-bottom: 20px;
+  font-size: 2rem;
+}
+
+/* =======================
+   GALLERY
+======================= */
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 15px;
+  max-width: 1000px;
+  margin: auto;
+}
+
+.gallery img {
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+  border-radius: 15px;
+  transition: transform 0.3s ease;
+}
+
+.gallery img:hover {
+  transform: scale(1.05);
+}
+
+/* =======================
+   MESSAGE
+======================= */
+.message {
+  max-width: 700px;
+  margin: auto;
+  font-size: 1.1rem;
+  line-height: 1.8;
+}
+
+/* =======================
+   ANIMATIONS
+======================= */
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* =======================
+   BALLOONS
+======================= */
+.balloon {
+  position: absolute;
+  bottom: -150px;
+  width: 40px;
+  height: 50px;
+  background: red;
+  border-radius: 50%;
+  animation: floatUp 10s infinite ease-in;
+  opacity: 0.7;
+}
+
+@keyframes floatUp {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-120vh); }
+}
+
+/* =======================
+   CONFETTI CANVAS
+======================= */
+canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+}
+</style>
+</head>
+
+<body>
+
+<canvas id="confetti"></canvas>
+
+<!-- HERO -->
+<div class="hero">
+  <h1>🎉 Happy Birthday Racheal 🎉</h1>
+  <p>You are special, loved, and celebrated today and always 💖</p>
+  <button class="btn" onclick="launchConfetti()">Celebrate 🎊</button>
+</div>
+
+<!-- GALLERY -->
+<section>
+  <h2>📸 Memories</h2>
+  <div class="gallery">
+    <!-- Replace these images -->
+    <img src="images/Seun.png" />
+    <img src="images/Racheal.jpg"/>
+    <img src="images/Raquel.jpg" />
+    <img src="images/Sen.jpg" />
+  </div>
+</section>
+
+<!-- MESSAGE -->
+<section>
+  <h2>💌 Birthday Message</h2>
+  <p class="message">
+    Happy Birthday to an amazing soul ✨  
+    May your life be filled with joy, success, laughter, and unforgettable memories.  
+    You deserve all the happiness in the world today and always ❤️
+  </p>
+</section>
+
+<!-- BALLOONS -->
+<div class="balloon" style="left:10%; background:#ff4d6d;"></div>
+<div class="balloon" style="left:30%; background:#ffd166;"></div>
+<div class="balloon" style="left:50%; background:#06d6a0;"></div>
+<div class="balloon" style="left:70%; background:#118ab2;"></div>
+<div class="balloon" style="left:90%; background:#ef476f;"></div> 
+
+<script>
+/* =======================
+   CONFETTI SYSTEM
+======================= */
+const canvas = document.getElementById("confetti");
+const ctx = canvas.getContext("2d");
+
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+let pieces = [];
+
+function createPiece() {
+  return {
+    x: Math.random() * canvas.width,
+    y: Math.random() * canvas.height,
+    size: Math.random() * 8 + 3,
+    speed: Math.random() * 4 + 1,
+    color: `hsl(${Math.random() * 360}, 100%, 60%)`
+  };
+}
+
+for (let i = 0; i < 200; i++) {
+  pieces.push(createPiece());
+}
+
+function drawConfetti() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  pieces.forEach(p => {
+    ctx.fillStyle = p.color;
+    ctx.fillRect(p.x, p.y, p.size, p.size);
+
+    p.y += p.speed;
+
+    if (p.y > canvas.height) {
+      p.y = 0;
+      p.x = Math.random() * canvas.width;
+    }
+  });
+
+  requestAnimationFrame(drawConfetti);
+}
+
+drawConfetti();
+
+/* =======================
+   BUTTON CONFETTI ALERT
+======================= */
+function launchConfetti() {
+  alert("🎉 Happy Birthday!!! 🎉 Let the celebration begin!");
+}
+
+/* Resize fix */
+window.addEventListener("resize", () => {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+});
+</script>
+
+</body>
+</html>
